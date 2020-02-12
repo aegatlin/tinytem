@@ -1,18 +1,33 @@
-import { Todo, TodoUI } from '../code/Todo'
-import { Layout } from '../code/Layout'
+import { gql, useQuery } from '@apollo/client'
+import { client, Layout } from '../code/Layout'
+import { TodoUI } from '../code/Todo'
 
-const todos: Todo[] = [
-  { title: 'Read a book', completed: false },
-  { title: 'Eat a pizza', completed: true }
-]
+const TODOS = gql`
+  {
+    allTodos {
+      data {
+        title
+        completed
+      }
+    }
+  }
+`
 
 export default () => {
+  const { loading, error, data } = useQuery(TODOS, { client })
+  console.log(data)
+
+  if (loading) return <Layout>Loading...</Layout>
+  if (error) return <Layout>Error</Layout>
+
   return (
     <Layout>
       <h2>Todo List</h2>
-      {todos.map((todo, i) => (
-        <TodoUI key={i} todo={todo} />
-      ))}
+      <div>
+        {data.allTodos.data.map((todo, i) => (
+          <TodoUI key={i} todo={todo} />
+        ))}
+      </div>
     </Layout>
   )
 }
