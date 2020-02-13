@@ -28,14 +28,11 @@ export default () => {
       }
     })
 
-    console.log('fetch ', todos)
-
     setTodos(todos)
   }
 
   const deleteTodo = (id: string) => {
     const newTodos = todos.filter(todo => todo.id !== id)
-    console.log('delete ', newTodos)
     setTodos(newTodos)
   }
 
