@@ -1,12 +1,14 @@
-import { gql, useQuery, useMutation } from '@apollo/client'
-import { client, Layout } from '../code/Layout'
-import { TodoUI } from '../code/Todo'
-import { useState, useEffect } from 'react'
+import { gql, useQuery } from '@apollo/client'
+import { useEffect, useState } from 'react'
+import { apolloClient, Layout } from '../code/Layout'
+import { Todo, TodoUI } from '../code/Todo'
+import { TodoForm } from '../code/TodoForm'
 
-const TODOS = gql`
+const ALL_TODOS = gql`
   {
     allTodos {
       data {
+        _id
         title
         completed
       }
@@ -14,51 +16,46 @@ const TODOS = gql`
   }
 `
 
-const CREATE_TODO = gql`
-  mutation {
-    createTodo(data: { title: "Eat Chocolate", completed: false }) {
-      title
-      completed
-    }
-  }
-`
-
 export default () => {
-  const { loading, error, data, refetch } = useQuery(TODOS, { client })
-  const [createTodo, result] = useMutation(CREATE_TODO, { client })
-  const [todos, setTodos] = useState([])
-  useEffect(() => {
-    if (data) {
-      setTodos(data.allTodos.data)
-    }
-  }, [data])
+  const [todos, setTodos] = useState<Todo[]>([])
 
-  const addTodoHandler = () => {
-    createTodo()
+  const onCompleted: (data: any) => void = data => {
+    const todos = data.allTodos.data.map(({ _id, title, completed }) => {
+      return {
+        id: _id,
+        title,
+        completed
+      }
+    })
 
-    if (result.data) {
-      let newTodo = result.data.createTodo
-      newTodo.title = newTodo.title + 'you been hacked'
-      setTodos(todos.concat([newTodo]))
-    }
+    console.log('fetch ', todos)
 
-    setTimeout(() => refetch(), 3000)
+    setTodos(todos)
   }
+
+  const deleteTodo = (id: string) => {
+    const newTodos = todos.filter(todo => todo.id !== id)
+    console.log('delete ', newTodos)
+    setTodos(newTodos)
+  }
+
+  const { loading, error } = useQuery(ALL_TODOS, {
+    client: apolloClient,
+    onCompleted
+  })
 
   if (loading) return <Layout>Loading...</Layout>
   if (error) return <Layout>Error</Layout>
 
+  const addTodo = (todo: Todo): void => setTodos(todos.concat([todo]))
+
   return (
     <Layout>
+      <TodoForm addTodo={addTodo} />
       <h2>Todo List</h2>
       <div>
-        <label htmlFor="add-todo">Add Todo: </label>
-        <input type="text" name="add-todo" id="add-todo" />
-        <button onClick={addTodoHandler}>Submit</button>
-      </div>
-      <div>
         {todos.map((todo, i) => (
-          <TodoUI key={i} todo={todo} />
+          <TodoUI key={i} todo={todo} deleteTodo={deleteTodo} />
         ))}
       </div>
     </Layout>

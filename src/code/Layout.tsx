@@ -6,7 +6,7 @@ import {
 } from '@apollo/client'
 import fetch from 'isomorphic-unfetch'
 
-export const client = new ApolloClient({
+export const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
     uri: 'https://graphql.fauna.com/graphql',
@@ -19,7 +19,7 @@ export const client = new ApolloClient({
 
 export const Layout = props => {
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={apolloClient}>
       <div>
         <h1>TinyTem</h1>
         {props.children}
