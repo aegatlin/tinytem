@@ -1,29 +1,20 @@
-import {
-  ApolloClient,
-  ApolloProvider,
-  HttpLink,
-  InMemoryCache
-} from '@apollo/client'
-import fetch from 'isomorphic-unfetch'
+import { Header } from './Header'
+import { setupPage, normalize } from 'csstips'
+import { style } from 'typestyle'
 
-export const apolloClient = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: new HttpLink({
-    uri: 'https://graphql.fauna.com/graphql',
-    headers: {
-      Authorization: 'Bearer fnADkXkt0_ACE2DsD3728DBVDNwxuKPR7ImmaG_M'
-    },
-    fetch
-  })
+setupPage('#__next')
+normalize()
+
+const mainClass = style({
+  width: '100%',
+  height: '100%'
 })
 
 export const Layout = props => {
   return (
-    <ApolloProvider client={apolloClient}>
-      <div>
-        <h1>TinyTem</h1>
-        {props.children}
-      </div>
-    </ApolloProvider>
+    <>
+      <Header />
+      <main className={mainClass}>{props.children}</main>
+    </>
   )
 }
