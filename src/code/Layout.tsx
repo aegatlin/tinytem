@@ -7,7 +7,7 @@ normalize()
 
 const mainClass = style({
   width: '100%',
-  height: '100%'
+  height: '100%',
 })
 
 export const Layout = props => {

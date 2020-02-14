@@ -1,6 +1,6 @@
+import { useState } from 'react'
 import { style } from 'typestyle'
 import { AddTodoFormUI } from './AddTodoForm'
-import { useState } from 'react'
 import { Todo } from './Todo'
 
 const todosClass = style({
