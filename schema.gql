@@ -6,4 +6,3 @@ type Todo {
 type Query {
   allTodos: [Todo!]
 }
-

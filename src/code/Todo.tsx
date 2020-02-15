@@ -1,21 +1,22 @@
-import { width } from 'csstips'
 import { style } from 'typestyle'
 
-const todoClass = style({
-  padding: '5px',
-  width: '200px',
-  margin: '10px',
-  border: '1px solid',
-  display: 'flex',
-  justifyContent: 'space-between'
-})
+const todoClass = (completed: boolean) =>
+  style({
+    color: completed ? 'darkgrey' : 'black',
+    padding: '5px',
+    width: '250px',
+    margin: '10px',
+    border: '1px solid',
+    display: 'flex',
+    justifyContent: 'space-between'
+  })
 
 const titleClass = style({
   flex: '1',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  wordBreak: 'break-all',
+  wordBreak: 'break-word',
   padding: '0 10px'
 })
 
@@ -24,11 +25,13 @@ const buttonClass = style({
   width: '25px'
 })
 
-export const Todo = ({ todo, deleteTodo, toggleCompleted }) => {
-  const { title } = todo
-
+export const Todo = ({
+  todo: { title, completed },
+  deleteTodo,
+  toggleCompleted
+}) => {
   return (
-    <div className={todoClass}>
+    <div className={todoClass(completed)}>
       <button className={buttonClass} onClick={toggleCompleted}>
         ✓
       </button>

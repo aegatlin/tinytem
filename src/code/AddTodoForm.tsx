@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { CTodo, getRandString } from './Todos'
+import { CTodo } from './Todos'
 
 export const AddTodoFormUI = ({ addTodo }) => {
   const input = useRef(null)
@@ -7,7 +7,7 @@ export const AddTodoFormUI = ({ addTodo }) => {
   const onSubmit = e => {
     e.preventDefault()
     const newTodo: CTodo = {
-      id: getRandString(),
+      id: '1',
       title: input.current.value,
       completed: false
     }

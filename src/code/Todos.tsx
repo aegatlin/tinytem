@@ -1,7 +1,6 @@
-import { useState } from 'react'
 import { style } from 'typestyle'
 import { AddTodoFormUI } from './AddTodoForm'
-import { Todo } from './Todo'
+import { useTodos } from './useTodos'
 
 const todosClass = style({
   display: 'flex',
@@ -16,39 +15,10 @@ export class CTodo {
   completed: boolean
 }
 
-export const getRandString = () => `${Math.random()}`
-
-const initialTodos: CTodo[] = [
-  { id: getRandString(), title: 'Eat pizza', completed: true },
-  { id: getRandString(), title: 'Write code', completed: false },
-  { id: getRandString(), title: 'Be better', completed: false }
-]
-
 export const TodosUI = () => {
-  const [todos, setTodos] = useState(initialTodos)
-  const addTodo = (newTodo: CTodo) => setTodos(todos.concat([newTodo]))
-  const deleteTodo = (id: string) =>
-    setTodos(todos.filter(todo => todo.id !== id))
-  const updateTodo = (newTodo: CTodo) =>
-    setTodos(
-      todos.map(todo => {
-        if (todo.id === newTodo.id) return newTodo
-        return todo
-      })
-    )
-
+  const { todos, todoMaker, addTodo } = useTodos()
   const todosWithCompleted = (b: boolean) =>
-    todos
-      .filter(todo => todo.completed === b)
-      .map((todo, i) => {
-        const props = {
-          todo,
-          deleteTodo: () => deleteTodo(todo.id),
-          toggleCompleted: () =>
-            updateTodo({ ...todo, completed: !todo.completed })
-        }
-        return <Todo key={i} {...props} />
-      })
+    todos.filter(todo => todo.completed === b).map(todoMaker)
 
   return (
     <div className={todosClass}>
