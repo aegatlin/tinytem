@@ -1,10 +1,10 @@
 import { Layout } from '../code/Layout'
-import { TodosUI } from '../code/Todos'
+import { Todos } from '../code/todos/Todos'
 
 export default () => {
   return (
     <Layout>
-      <TodosUI />
+      <Todos />
     </Layout>
   )
 }

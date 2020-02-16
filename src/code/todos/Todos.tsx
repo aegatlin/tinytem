@@ -9,7 +9,7 @@ const todosClass = style({
   padding: '50px'
 })
 
-export const TodosUI = () => {
+export const Todos = () => {
   const { todos, todoMaker, addTodo } = useTodos()
   const todosWithCompleted = (b: boolean) =>
     todos.filter(todo => todo.completed === b).map(todoMaker)

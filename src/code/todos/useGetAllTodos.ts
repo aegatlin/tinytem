@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client'
-import { client } from './apolloClient'
+import { client } from '../apolloClient'
 import { CTodo } from './Todo'
 
 interface IGetAllTodos {

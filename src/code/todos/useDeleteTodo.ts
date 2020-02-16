@@ -1,7 +1,7 @@
 import { gql, useMutation } from '@apollo/client'
 import { CTodo } from './Todo'
 import { GET_ALL_TODOS } from './useGetAllTodos'
-import { client } from './apolloClient'
+import { client } from '../apolloClient'
 
 interface IDeleteTodo {
   deleteTodo: {
