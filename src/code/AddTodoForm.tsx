@@ -1,17 +1,11 @@
 import { useRef } from 'react'
-import { CTodo } from './Todos'
 
 export const AddTodoFormUI = ({ addTodo }) => {
   const input = useRef(null)
 
   const onSubmit = e => {
     e.preventDefault()
-    const newTodo: CTodo = {
-      id: '1',
-      title: input.current.value,
-      completed: false
-    }
-    addTodo(newTodo)
+    addTodo({ title: input.current.value, completed: false })
     input.current.value = ''
   }
 

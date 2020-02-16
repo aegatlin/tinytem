@@ -1,5 +1,11 @@
 import { style } from 'typestyle'
 
+export class CTodo {
+  _id: string
+  title: string
+  completed: boolean
+}
+
 const todoClass = (completed: boolean) =>
   style({
     color: completed ? 'darkgrey' : 'black',

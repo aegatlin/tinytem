@@ -9,12 +9,6 @@ const todosClass = style({
   padding: '50px'
 })
 
-export class CTodo {
-  id: string
-  title: string
-  completed: boolean
-}
-
 export const TodosUI = () => {
   const { todos, todoMaker, addTodo } = useTodos()
   const todosWithCompleted = (b: boolean) =>
