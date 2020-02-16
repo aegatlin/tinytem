@@ -18,6 +18,10 @@ export const useTodos = () => {
     updateTodo({ variables: { ...todo, completed: !todo.completed } })
   }
 
+  const updateTitleMaker = (todo: CTodo) => (newTitle: string): void => {
+    updateTodo({ variables: { ...todo, title: newTitle } })
+  }
+
   return {
     todos,
     addTodo: ({ title, completed }: Exclude<CTodo, '_id'>): void => {
@@ -27,7 +31,8 @@ export const useTodos = () => {
       const props = {
         todo,
         deleteTodo: deleteTodoMaker(todo),
-        toggleCompleted: toggleCompletedMaker(todo)
+        toggleCompleted: toggleCompletedMaker(todo),
+        updateTitle: updateTitleMaker(todo)
       }
 
       return <Todo key={key} {...props} />
