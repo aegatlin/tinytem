@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { style } from 'typestyle'
 
 export class CTodo {
@@ -51,16 +51,24 @@ interface ITodo {
 }
 
 export const Todo = ({
-  todo: { title, completed },
+  todo,
   deleteTodo,
   toggleCompleted,
   updateTitle
 }: ITodo) => {
   const [isEditing, setIsEditing] = useState(false)
+  const [isUpdating, setIsUpdating] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const input = useRef(null)
+  useEffect(() => setIsUpdating(false), [todo])
 
+  const { title, completed } = todo
   const editHandler = () => {
-    if (isEditing) updateTitle(input.current.value)
+    if (isEditing) {
+      setIsUpdating(true)
+      updateTitle(input.current.value)
+    }
+
     setIsEditing(!isEditing)
   }
 
@@ -77,16 +85,32 @@ export const Todo = ({
     )
   }
 
+  const completeHandler = () => {
+    setIsUpdating(true)
+    toggleCompleted()
+  }
+
+  const deleteHandler = () => {
+    setIsDeleting(true)
+    deleteTodo()
+  }
+
   return (
     <div className={todoClass(completed)}>
-      <button className={buttonClass} onClick={toggleCompleted}>
+      <button className={buttonClass} onClick={completeHandler}>
         ✓
       </button>
-      {isEditing ? <EditForm /> : <div className={titleClass}>{title}</div>}
+      {isEditing ? (
+        <EditForm />
+      ) : (
+        <div className={titleClass}>
+          {isDeleting ? 'Deleting...' : isUpdating ? 'Updating...' : title}
+        </div>
+      )}
       <button className={buttonClass} onClick={editHandler}>
         ✎
       </button>
-      <button className={buttonClass} onClick={deleteTodo}>
+      <button className={buttonClass} onClick={deleteHandler}>
         X
       </button>
     </div>
