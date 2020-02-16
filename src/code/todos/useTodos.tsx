@@ -5,8 +5,8 @@ import { useGetAllTodos } from './useGetAllTodos'
 import { useUpdateTodo } from './useUpdateTodo'
 
 export const useTodos = () => {
-  const { todos } = useGetAllTodos()
-  const { createTodo } = useCreateTodo()
+  const { todos, isLoadingAllTodos } = useGetAllTodos()
+  const { createTodo, isCreatingTodo } = useCreateTodo()
   const { deleteTodo } = useDeleteTodo()
   const { updateTodo } = useUpdateTodo()
 
@@ -36,6 +36,8 @@ export const useTodos = () => {
       }
 
       return <Todo key={key} {...props} />
-    }
+    },
+    isLoadingAllTodos,
+    isCreatingTodo
   }
 }

@@ -23,7 +23,7 @@ const CREATE_TODO = gql`
 `
 
 export const useCreateTodo = () => {
-  const [createTodo, { error }] = useMutation<ICreateTodo, ICreateTodoVars>(
+  const [createTodo, { error, loading }] = useMutation<ICreateTodo, ICreateTodoVars>(
     CREATE_TODO,
     {
       client,
@@ -40,5 +40,5 @@ export const useCreateTodo = () => {
   )
 
   if (error) console.log(error)
-  return { createTodo }
+  return { createTodo, isCreatingTodo: loading }
 }

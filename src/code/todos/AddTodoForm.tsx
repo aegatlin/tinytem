@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-export const AddTodoFormUI = ({ addTodo }) => {
+export const AddTodoFormUI = ({ addTodo, isCreatingTodo }) => {
   const input = useRef(null)
 
   const onSubmit = e => {
@@ -12,6 +12,7 @@ export const AddTodoFormUI = ({ addTodo }) => {
   return (
     <>
       <h3>Add a new todo</h3>
+      {isCreatingTodo && <div>Creating...</div>}
       <form onSubmit={onSubmit}>
         <input type="text" name="add-todo" ref={input} />
         <button type="submit">Submit</button>

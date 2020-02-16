@@ -10,17 +10,26 @@ const todosClass = style({
 })
 
 export const Todos = () => {
-  const { todos, todoMaker, addTodo } = useTodos()
+  const {
+    todos,
+    todoMaker,
+    addTodo,
+    isLoadingAllTodos,
+    isCreatingTodo
+  } = useTodos()
+
   const todosWithCompleted = (b: boolean) =>
     todos.filter(todo => todo.completed === b).map(todoMaker)
 
   return (
     <div className={todosClass}>
       <h2>My Todos</h2>
-      <AddTodoFormUI addTodo={addTodo} />
+      <AddTodoFormUI addTodo={addTodo} isCreatingTodo={isCreatingTodo} />
       <h3>Todo list</h3>
+      {isLoadingAllTodos && <div>Loading Todos...</div>}
       {todosWithCompleted(false)}
       <h3>Completed todos</h3>
+      {isLoadingAllTodos && <div>Loading Todos...</div>}
       {todosWithCompleted(true)}
     </div>
   )
