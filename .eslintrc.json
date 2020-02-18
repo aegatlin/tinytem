@@ -31,7 +31,8 @@
     "react/display-name": "off",
     "@typescript-eslint/member-delimiter-style": "off",
     "@typescript-eslint/interface-name-prefix": "off",
-    "@typescript-eslint/no-namespace": "off"
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/camelcase": "warn"
   },
   "settings": {
     "react": {

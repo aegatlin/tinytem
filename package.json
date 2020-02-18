@@ -25,6 +25,7 @@
   "homepage": "https://github.com/aegatlin/tinytem#readme",
   "dependencies": {
     "@apollo/client": "^3.0.0-beta.34",
+    "@auth0/auth0-spa-js": "^1.6.4",
     "csstips": "^1.2.0",
     "graphql": "^14.6.0",
     "isomorphic-unfetch": "^3.0.0",
