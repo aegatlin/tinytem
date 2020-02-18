@@ -10,7 +10,7 @@ const mainClass = style({
   height: '100%'
 })
 
-export const Layout = props => {
+export const Layout = (props): JSX.Element => {
   return (
     <>
       <Header />

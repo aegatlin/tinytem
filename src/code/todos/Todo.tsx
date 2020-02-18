@@ -7,7 +7,7 @@ export class CTodo {
   completed: boolean
 }
 
-const todoClass = (completed: boolean) =>
+const todoClass = (completed: boolean): string =>
   style({
     color: completed ? 'darkgrey' : 'black',
     padding: '5px',
@@ -55,7 +55,7 @@ export const Todo = ({
   deleteTodo,
   toggleCompleted,
   updateTitle
-}: ITodo) => {
+}: ITodo): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -63,7 +63,7 @@ export const Todo = ({
   useEffect(() => setIsUpdating(false), [todo])
 
   const { title, completed } = todo
-  const editHandler = () => {
+  const editHandler = (): void => {
     if (isEditing) {
       setIsUpdating(true)
       updateTitle(input.current.value)
@@ -72,8 +72,8 @@ export const Todo = ({
     setIsEditing(!isEditing)
   }
 
-  const EditForm = () => {
-    const submitHandler = e => {
+  const EditForm = (): JSX.Element => {
+    const submitHandler = (e): void => {
       e.preventDefault()
       editHandler()
     }
@@ -85,12 +85,12 @@ export const Todo = ({
     )
   }
 
-  const completeHandler = () => {
+  const completeHandler = (): void => {
     setIsUpdating(true)
     toggleCompleted()
   }
 
-  const deleteHandler = () => {
+  const deleteHandler = (): void => {
     setIsDeleting(true)
     deleteTodo()
   }

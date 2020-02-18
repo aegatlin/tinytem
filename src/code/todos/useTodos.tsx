@@ -4,7 +4,13 @@ import { useDeleteTodo } from './useDeleteTodo'
 import { useGetAllTodos } from './useGetAllTodos'
 import { useUpdateTodo } from './useUpdateTodo'
 
-export const useTodos = () => {
+export const useTodos = (): {
+  todos: CTodo[]
+  addTodo(eTodo: Exclude<CTodo, '_id'>): void
+  todoMaker(todo: CTodo, key: number): JSX.Element
+  isLoadingAllTodos: boolean
+  isCreatingTodo: boolean
+} => {
   const { todos, isLoadingAllTodos } = useGetAllTodos()
   const { createTodo, isCreatingTodo } = useCreateTodo()
   const { deleteTodo } = useDeleteTodo()
@@ -24,10 +30,10 @@ export const useTodos = () => {
 
   return {
     todos,
-    addTodo: ({ title, completed }: Exclude<CTodo, '_id'>): void => {
+    addTodo: ({ title, completed }): void => {
       createTodo({ variables: { title, completed } })
     },
-    todoMaker: (todo: CTodo, key: number) => {
+    todoMaker: (todo, key): JSX.Element => {
       const props = {
         todo,
         deleteTodo: deleteTodoMaker(todo),

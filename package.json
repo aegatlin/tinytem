@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "format": "npx prettier --write \"src/**/**.{ts,tsx,js}\""
+    "format": "npx prettier --write \"src/**/**.{ts,tsx,js}\"",
+    "lint": "eslint \"src/**\""
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run format"
+      "pre-commit": "npm run format && npm run lint"
     }
   },
   "repository": {
@@ -35,7 +36,14 @@
   "devDependencies": {
     "@types/node": "^13.7.1",
     "@types/react": "^16.9.19",
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.18.3",
     "husky": "^4.2.3",
+    "prettier": "^1.19.1",
     "typescript": "^3.7.5"
   }
 }

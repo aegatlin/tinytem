@@ -1,4 +1,4 @@
-import { gql, useMutation } from '@apollo/client'
+import { gql, MutationFunction, useMutation } from '@apollo/client'
 import { client } from '../apolloClient'
 import { CTodo } from './Todo'
 
@@ -16,7 +16,9 @@ const UPDATE_TODO = gql`
   }
 `
 
-export const useUpdateTodo = () => {
+export const useUpdateTodo = (): {
+  updateTodo: MutationFunction<IUpdateTodo, CTodo>
+} => {
   const [updateTodo, { error }] = useMutation<IUpdateTodo, CTodo>(UPDATE_TODO, {
     client
   })

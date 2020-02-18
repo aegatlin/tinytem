@@ -9,7 +9,7 @@ const todosClass = style({
   padding: '50px'
 })
 
-export const Todos = () => {
+export const Todos = (): JSX.Element => {
   const {
     todos,
     todoMaker,
@@ -18,7 +18,7 @@ export const Todos = () => {
     isCreatingTodo
   } = useTodos()
 
-  const todosWithCompleted = (b: boolean) =>
+  const todosWithCompleted = (b: boolean): JSX.Element[] =>
     todos.filter(todo => todo.completed === b).map(todoMaker)
 
   return (

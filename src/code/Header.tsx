@@ -8,7 +8,7 @@ const headerClass = style({
   boxShadow: '0 0 3px'
 })
 
-export const Header = () => {
+export const Header = (): JSX.Element => {
   return (
     <div className={headerClass}>
       <h1>TinyTem</h1>

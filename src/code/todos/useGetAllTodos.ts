@@ -20,7 +20,10 @@ export const GET_ALL_TODOS = gql`
   }
 `
 
-export const useGetAllTodos = () => {
+export const useGetAllTodos = (): {
+  todos: CTodo[]
+  isLoadingAllTodos: boolean
+} => {
   const { error, loading, data } = useQuery<IGetAllTodos>(GET_ALL_TODOS, {
     client
   })

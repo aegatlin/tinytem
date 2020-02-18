@@ -1,9 +1,9 @@
 import { useRef } from 'react'
 
-export const AddTodoFormUI = ({ addTodo, isCreatingTodo }) => {
+export const AddTodoFormUI = ({ addTodo, isCreatingTodo }): JSX.Element => {
   const input = useRef(null)
 
-  const onSubmit = e => {
+  const onSubmit = (e): void => {
     e.preventDefault()
     addTodo({ title: input.current.value, completed: false })
     input.current.value = ''
