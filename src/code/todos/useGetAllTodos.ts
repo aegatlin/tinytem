@@ -21,7 +21,9 @@ export const GET_ALL_TODOS = gql`
 `
 
 export const useGetAllTodos = () => {
-  const { error, loading, data } = useQuery<IGetAllTodos>(GET_ALL_TODOS, { client })
+  const { error, loading, data } = useQuery<IGetAllTodos>(GET_ALL_TODOS, {
+    client
+  })
 
   if (error) console.log(error)
   return { todos: data?.allTodos?.data || [], isLoadingAllTodos: loading }

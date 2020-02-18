@@ -23,21 +23,21 @@ const CREATE_TODO = gql`
 `
 
 export const useCreateTodo = () => {
-  const [createTodo, { error, loading }] = useMutation<ICreateTodo, ICreateTodoVars>(
-    CREATE_TODO,
-    {
-      client,
-      update: (cache, { data: { createTodo: newTodo } }) => {
-        const {
-          allTodos: { data: todos }
-        } = cache.readQuery({ query: GET_ALL_TODOS })
-        cache.writeQuery({
-          query: GET_ALL_TODOS,
-          data: { allTodos: { data: todos.concat(newTodo) } }
-        })
-      }
+  const [createTodo, { error, loading }] = useMutation<
+    ICreateTodo,
+    ICreateTodoVars
+  >(CREATE_TODO, {
+    client,
+    update: (cache, { data: { createTodo: newTodo } }) => {
+      const {
+        allTodos: { data: todos }
+      } = cache.readQuery({ query: GET_ALL_TODOS })
+      cache.writeQuery({
+        query: GET_ALL_TODOS,
+        data: { allTodos: { data: todos.concat(newTodo) } }
+      })
     }
-  )
+  })
 
   if (error) console.log(error)
   return { createTodo, isCreatingTodo: loading }
