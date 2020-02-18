@@ -33,7 +33,7 @@ export const useTodos = (): {
     addTodo: ({ title, completed }): void => {
       createTodo({ variables: { title, completed } })
     },
-    todoMaker: (todo, key): JSX.Element => {
+    todoMaker: (todo): JSX.Element => {
       const props = {
         todo,
         deleteTodo: deleteTodoMaker(todo),
@@ -41,7 +41,7 @@ export const useTodos = (): {
         updateTitle: updateTitleMaker(todo)
       }
 
-      return <Todo key={key} {...props} />
+      return <Todo key={todo._id} {...props} />
     },
     isLoadingAllTodos,
     isCreatingTodo
