@@ -1,7 +1,7 @@
-import { gql, MutationFunction, useMutation } from '@apollo/client'
+import { MutationFunction, useMutation } from '@apollo/client'
 import { client } from '../apolloClient'
+import { gqlq } from '../gqlq'
 import { CTodo } from './Todo'
-import { GET_ALL_TODOS } from './useGetAllTodos'
 
 interface IDeleteTodo {
   deleteTodo: {
@@ -13,29 +13,22 @@ interface IDeleteTodoVars {
   _id: string
 }
 
-const DELETE_TODO = gql`
-  mutation DeleteTodo($_id: ID!) {
-    deleteTodo(id: $_id) {
-      _id
-    }
-  }
-`
-
 export const useDeleteTodo = (): {
   deleteTodo: MutationFunction<IDeleteTodo, IDeleteTodoVars>
 } => {
   const [deleteTodo, { error }] = useMutation<IDeleteTodo, IDeleteTodoVars>(
-    DELETE_TODO,
+    gqlq.mutations.deleteTodo,
     {
       client,
       update: (cache, { data }) => {
         const _id = data.deleteTodo._id
-        const {
-          allTodos: { data: todos }
-        } = cache.readQuery({ query: GET_ALL_TODOS })
+        const { allTodos } = cache.readQuery({
+          query: gqlq.queries.getAllTodos
+        })
+        const todos = allTodos?.data
 
         cache.writeQuery({
-          query: GET_ALL_TODOS,
+          query: gqlq.queries.getAllTodos,
           data: {
             allTodos: { data: todos.filter((t: CTodo) => t._id !== _id) }
           }

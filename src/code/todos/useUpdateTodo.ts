@@ -1,27 +1,21 @@
-import { gql, MutationFunction, useMutation } from '@apollo/client'
+import { MutationFunction, useMutation } from '@apollo/client'
 import { client } from '../apolloClient'
+import { gqlq } from '../gqlq'
 import { CTodo } from './Todo'
 
 interface IUpdateTodo {
   updateTodo: CTodo
 }
 
-const UPDATE_TODO = gql`
-  mutation UpdateTodo($_id: ID!, $title: String!, $completed: Boolean!) {
-    updateTodo(id: $_id, data: { title: $title, completed: $completed }) {
-      _id
-      title
-      completed
-    }
-  }
-`
-
 export const useUpdateTodo = (): {
   updateTodo: MutationFunction<IUpdateTodo, CTodo>
 } => {
-  const [updateTodo, { error }] = useMutation<IUpdateTodo, CTodo>(UPDATE_TODO, {
-    client
-  })
+  const [updateTodo, { error }] = useMutation<IUpdateTodo, CTodo>(
+    gqlq.mutations.updateTodo,
+    {
+      client
+    }
+  )
 
   if (error) console.log(error)
   return { updateTodo }

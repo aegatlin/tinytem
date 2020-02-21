@@ -1,7 +1,7 @@
-import { gql, MutationFunction, useMutation } from '@apollo/client'
+import { MutationFunction, useMutation } from '@apollo/client'
 import { client } from '../apolloClient'
+import { gqlq } from '../gqlq'
 import { CTodo } from './Todo'
-import { GET_ALL_TODOS } from './useGetAllTodos'
 
 interface ICreateTodo {
   createTodo: CTodo
@@ -12,16 +12,6 @@ interface ICreateTodoVars {
   completed: boolean
 }
 
-const CREATE_TODO = gql`
-  mutation AddTodo($title: String!, $completed: Boolean!) {
-    createTodo(data: { title: $title, completed: $completed }) {
-      _id
-      title
-      completed
-    }
-  }
-`
-
 export const useCreateTodo = (): {
   createTodo: MutationFunction<ICreateTodo, ICreateTodoVars>
   isCreatingTodo: boolean
@@ -29,14 +19,14 @@ export const useCreateTodo = (): {
   const [createTodo, { error, loading }] = useMutation<
     ICreateTodo,
     ICreateTodoVars
-  >(CREATE_TODO, {
+  >(gqlq.mutations.createTodo, {
     client,
     update: (cache, { data: { createTodo: newTodo } }) => {
       const {
         allTodos: { data: todos }
-      } = cache.readQuery({ query: GET_ALL_TODOS })
+      } = cache.readQuery({ query: gqlq.queries.getAllTodos })
       cache.writeQuery({
-        query: GET_ALL_TODOS,
+        query: gqlq.queries.getAllTodos,
         data: { allTodos: { data: todos.concat(newTodo) } }
       })
     }
