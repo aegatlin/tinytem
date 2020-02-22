@@ -1,6 +1,6 @@
 import { MutationFunction, useMutation } from '@apollo/client'
 import { client } from '../apolloClient'
-import { gqlq } from '../gqlq'
+import { gqlq } from '../../gqlq'
 import { CTodo } from './Todo'
 
 interface IUpdateTodo {

@@ -1,5 +1,5 @@
-import { Layout } from '../code/Layout'
-import { Todos } from '../code/todos/Todos'
+import { Layout } from '../code/front/Layout'
+import { Todos } from '../code/front/todos/Todos'
 
 export default (): JSX.Element => {
   return (
