@@ -11,7 +11,7 @@ export const useUpdateTodo = (): {
   updateTodo: MutationFunction<IUpdateTodo, CTodo>
 } => {
   const [updateTodo, { error }] = useMutation<IUpdateTodo, CTodo>(
-    gqlq.mutations.updateTodo,
+    gqlq.mutation.updateTodo,
     {
       client
     }

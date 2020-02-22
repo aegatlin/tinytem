@@ -1,7 +1,7 @@
 import { CTodo, Todo } from './Todo'
 import { useCreateTodo } from './useCreateTodo'
 import { useDeleteTodo } from './useDeleteTodo'
-import { useGetAllTodos } from './useGetAllTodos'
+import { useAllTodos } from './useAllTodos'
 import { useUpdateTodo } from './useUpdateTodo'
 
 export const useTodos = (): {
@@ -11,7 +11,7 @@ export const useTodos = (): {
   isLoadingAllTodos: boolean
   isCreatingTodo: boolean
 } => {
-  const { todos, isLoadingAllTodos } = useGetAllTodos()
+  const { todos, isLoadingAllTodos } = useAllTodos()
   const { createTodo, isCreatingTodo } = useCreateTodo()
   const { deleteTodo } = useDeleteTodo()
   const { updateTodo } = useUpdateTodo()

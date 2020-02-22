@@ -19,14 +19,14 @@ export const useCreateTodo = (): {
   const [createTodo, { error, loading }] = useMutation<
     ICreateTodo,
     ICreateTodoVars
-  >(gqlq.mutations.createTodo, {
+  >(gqlq.mutation.createTodo, {
     client,
     update: (cache, { data: { createTodo: newTodo } }) => {
       const {
         allTodos: { data: todos }
-      } = cache.readQuery({ query: gqlq.queries.getAllTodos })
+      } = cache.readQuery({ query: gqlq.query.allTodos })
       cache.writeQuery({
-        query: gqlq.queries.getAllTodos,
+        query: gqlq.query.allTodos,
         data: { allTodos: { data: todos.concat(newTodo) } }
       })
     }

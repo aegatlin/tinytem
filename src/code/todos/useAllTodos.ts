@@ -3,22 +3,19 @@ import { client } from '../apolloClient'
 import { gqlq } from '../gqlq'
 import { CTodo } from './Todo'
 
-interface IGetAllTodos {
+interface IAllTodos {
   allTodos: {
     data: CTodo[]
   }
 }
 
-export const useGetAllTodos = (): {
+export const useAllTodos = (): {
   todos: CTodo[]
   isLoadingAllTodos: boolean
 } => {
-  const { error, loading, data } = useQuery<IGetAllTodos>(
-    gqlq.queries.getAllTodos,
-    {
-      client
-    }
-  )
+  const { error, loading, data } = useQuery<IAllTodos>(gqlq.query.allTodos, {
+    client
+  })
 
   if (error) console.log(error)
   return { todos: data?.allTodos?.data || [], isLoadingAllTodos: loading }
