@@ -1,38 +1,22 @@
-import { CTodo, Todo } from './Todo'
-import { useCreateTodo } from './useCreateTodo'
-import { useDeleteTodo } from './useDeleteTodo'
-import { useAllTodos } from './useAllTodos'
-import { useUpdateTodo } from './useUpdateTodo'
+import { CTodo } from '../../CTodo'
+import { AllTodos, CreateTodo, DeleteTodo, UpdateTodo } from '../../namespacer'
+import { Todo } from './Todo'
 
 export const useTodos = (): {
   todos: CTodo[]
-  addTodo(eTodo: Exclude<CTodo, '_id'>): void
-  todoMaker(todo: CTodo, key: number): JSX.Element
+  addTodo(todo: Exclude<CTodo, '_id'>): void
+  todoMaker(todo: CTodo): JSX.Element
   isLoadingAllTodos: boolean
   isCreatingTodo: boolean
 } => {
-  const { todos, isLoadingAllTodos } = useAllTodos()
-  const { createTodo, isCreatingTodo } = useCreateTodo()
-  const { deleteTodo } = useDeleteTodo()
-  const { updateTodo } = useUpdateTodo()
-
-  const deleteTodoMaker = (todo: CTodo) => (): void => {
-    deleteTodo({ variables: { _id: todo._id } })
-  }
-
-  const toggleCompletedMaker = (todo: CTodo) => (): void => {
-    updateTodo({ variables: { ...todo, completed: !todo.completed } })
-  }
-
-  const updateTitleMaker = (todo: CTodo) => (newTitle: string): void => {
-    updateTodo({ variables: { ...todo, title: newTitle } })
-  }
+  const { todos, isLoadingAllTodos } = AllTodos.useAllTodos()
+  const { createTodoMaker, isCreatingTodo } = CreateTodo.useCreateTodo()
+  const { deleteTodoMaker } = DeleteTodo.useDeleteTodo()
+  const { toggleCompletedMaker, updateTitleMaker } = UpdateTodo.useUpdateTodo()
 
   return {
     todos,
-    addTodo: ({ title, completed }): void => {
-      createTodo({ variables: { title, completed } })
-    },
+    addTodo: createTodoMaker,
     todoMaker: (todo): JSX.Element => {
       const props = {
         todo,
