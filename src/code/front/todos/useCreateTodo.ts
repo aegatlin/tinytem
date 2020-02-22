@@ -1,16 +1,6 @@
 import { MutationFunction, useMutation } from '@apollo/client'
+import { gqlq, ICreateTodo, ICreateTodoVars } from '../../gql'
 import { client } from '../apolloClient'
-import { gqlq } from '../../gqlq'
-import { CTodo } from './Todo'
-
-interface ICreateTodo {
-  createTodo: CTodo
-}
-
-interface ICreateTodoVars {
-  title: string
-  completed: boolean
-}
 
 export const useCreateTodo = (): {
   createTodo: MutationFunction<ICreateTodo, ICreateTodoVars>

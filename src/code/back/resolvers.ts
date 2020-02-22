@@ -1,5 +1,14 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
-import { gqlq } from '../gqlq'
+import { IResolvers } from 'apollo-server-micro'
+import {
+  gqlq,
+  IAllTodos,
+  ICreateTodo,
+  ICreateTodoVars,
+  IDeleteTodo,
+  IDeleteTodoVars,
+  IUpdateTodo
+} from '../gql'
 
 const FAUNA_DB_URI = 'https://graphql.fauna.com/graphql'
 const AUTH = 'Bearer fnADkrIdXRACE0yd_1P9EyXxzWIkPz2rrM90E6Pv'
@@ -16,34 +25,34 @@ const client = new ApolloClient({
   })
 })
 
-export const resolvers = {
+export const resolvers: IResolvers = {
   Query: {
     allTodos: async () => {
-      const res = await client.query({ query: gqlq.query.allTodos })
+      const res = await client.query<IAllTodos>({
+        query: gqlq.query.allTodos
+      })
       return res.data.allTodos
     }
   },
   Mutation: {
-    createTodo: async (_, args) => {
-      const { title, completed } = args.data
-      const res = await client.mutate({
+    createTodo: async (_, { data }) => {
+      const { title, completed } = data
+      const res = await client.mutate<ICreateTodo, ICreateTodoVars>({
         mutation: gqlq.mutation.createTodo,
         variables: { title, completed }
       })
       return res.data.createTodo
     },
-    deleteTodo: async (_, args) => {
-      const { id } = args
-      const res = await client.mutate({
+    deleteTodo: async (_, { id }) => {
+      const res = await client.mutate<IDeleteTodo, IDeleteTodoVars>({
         mutation: gqlq.mutation.deleteTodo,
         variables: { _id: id }
       })
       return res.data.deleteTodo
     },
-    updateTodo: async (_, args) => {
-      const { id, data } = args
+    updateTodo: async (_, { id, data }) => {
       const { title, completed } = data
-      const res = await client.mutate({
+      const res = await client.mutate<IUpdateTodo>({
         mutation: gqlq.mutation.updateTodo,
         variables: { _id: id, title, completed }
       })

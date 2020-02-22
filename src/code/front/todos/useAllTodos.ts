@@ -1,13 +1,7 @@
 import { useQuery } from '@apollo/client'
+import { gqlq, IAllTodos } from '../../gql'
 import { client } from '../apolloClient'
-import { gqlq } from '../../gqlq'
 import { CTodo } from './Todo'
-
-interface IAllTodos {
-  allTodos: {
-    data: CTodo[]
-  }
-}
 
 export const useAllTodos = (): {
   todos: CTodo[]

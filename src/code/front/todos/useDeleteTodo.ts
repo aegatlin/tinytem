@@ -1,17 +1,7 @@
 import { MutationFunction, useMutation } from '@apollo/client'
+import { gqlq, IDeleteTodo, IDeleteTodoVars } from '../../gql'
 import { client } from '../apolloClient'
-import { gqlq } from '../../gqlq'
 import { CTodo } from './Todo'
-
-interface IDeleteTodo {
-  deleteTodo: {
-    _id: string
-  }
-}
-
-interface IDeleteTodoVars {
-  _id: string
-}
 
 export const useDeleteTodo = (): {
   deleteTodo: MutationFunction<IDeleteTodo, IDeleteTodoVars>

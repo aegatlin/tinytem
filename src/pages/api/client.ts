@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
-import { gqlq } from '../../code/gqlq'
+import { gqlq } from '../../code/gql'
 
 const FAUNA_DB_URI = 'https://graphql.fauna.com/graphql'
 const AUTH = 'Bearer fnADkrIdXRACE0yd_1P9EyXxzWIkPz2rrM90E6Pv'
