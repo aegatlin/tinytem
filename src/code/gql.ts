@@ -47,7 +47,18 @@ export const gqlq = {
           }
         }
       }
-    `
+    `,
+    allTodosQ: `
+    query {
+      allTodos {
+        data {
+          _id
+          title
+          completed
+        }
+      }
+    }
+  `
   },
   mutation: {
     createTodo: gql`
@@ -59,6 +70,15 @@ export const gqlq = {
         }
       }
     `,
+    createTodoQ: `
+    mutation CreateTodo($title: String!, $completed: Boolean!) {
+      createTodo(data: { title: $title, completed: $completed }) {
+        _id
+        title
+        completed
+      }
+    }
+  `,
     deleteTodo: gql`
       mutation DeleteTodo($_id: ID!) {
         deleteTodo(id: $_id) {
@@ -66,6 +86,13 @@ export const gqlq = {
         }
       }
     `,
+    deleteTodoQ: `
+    mutation DeleteTodo($_id: ID!) {
+      deleteTodo(id: $_id) {
+        _id
+      }
+    }
+  `,
     updateTodo: gql`
       mutation UpdateTodo($_id: ID!, $title: String!, $completed: Boolean!) {
         updateTodo(id: $_id, data: { title: $title, completed: $completed }) {
@@ -74,7 +101,16 @@ export const gqlq = {
           completed
         }
       }
-    `
+    `,
+    updateTodoQ: `
+    mutation UpdateTodo($_id: ID!, $title: String!, $completed: Boolean!) {
+      updateTodo(id: $_id, data: { title: $title, completed: $completed }) {
+        _id
+        title
+        completed
+      }
+    }
+  `
   }
 }
 
