@@ -1,6 +1,8 @@
 import { style } from 'typestyle'
+import { useAuth0 } from '../auth0'
 import { AddTodoFormUI } from './AddTodoForm'
 import { useTodos } from './useTodos'
+import { useToken } from '../TokenProvider'
 
 const todosClass = style({
   display: 'flex',
@@ -9,7 +11,7 @@ const todosClass = style({
   padding: '50px'
 })
 
-export const Todos = (): JSX.Element => {
+const TodoList = () => {
   const {
     todos,
     todoMaker,
@@ -33,4 +35,17 @@ export const Todos = (): JSX.Element => {
       {todosWithCompleted(true)}
     </div>
   )
+}
+
+export const Todos = (): JSX.Element => {
+  const { isAuthenticated, loading } = useAuth0()
+  const { token } = useToken()
+
+  const isReady = isAuthenticated && !loading
+  if (!isReady) return <div>Please log in to see your todos</div>
+
+  const isReadyWithToken = isReady && !!token
+  if (!isReadyWithToken) return <div>Login in successful. Loading...</div>
+
+  return <TodoList />
 }
