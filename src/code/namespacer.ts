@@ -1,7 +1,6 @@
 import { gql, useMutation, useQuery } from '@apollo/client'
 import { gqlClient } from './back/gqlClient'
 import { CTodo } from './CTodo'
-import { client } from './front/apolloClient'
 
 export namespace AllTodos {
   interface IQuery {
@@ -33,7 +32,7 @@ export namespace AllTodos {
     todos: CTodo[]
     isLoadingAllTodos: boolean
   } => {
-    const { error, loading, data } = useQuery<IQuery>(gql(query), { client })
+    const { error, loading, data } = useQuery<IQuery>(gql(query))
     if (error) console.log(error)
     return { todos: data?.allTodos?.data || [], isLoadingAllTodos: loading }
   }
@@ -67,7 +66,6 @@ export namespace DeleteTodo {
     const [deleteTodo, { error }] = useMutation<IMutation, IVars>(
       gql(mutation),
       {
-        client,
         update: (cache, { data }) => {
           const _id = data.deleteTodo._id
           const { allTodos } = cache.readQuery({
@@ -121,8 +119,7 @@ export namespace UpdateTodo {
 
   export const useUpdateTodo = () => {
     const [updateTodo, { error }] = useMutation<IUpdateTodo, CTodo>(
-      gql(mutation),
-      { client }
+      gql(mutation)
     )
 
     if (error) console.log(error)
@@ -173,7 +170,6 @@ export namespace CreateTodo {
       ICreateTodo,
       ICreateTodoVars
     >(gql(mutation), {
-      client,
       update: (cache, { data }) => {
         const newTodo = data.createTodo
         const { allTodos } = cache.readQuery({ query: AllTodos.gqlQuery })
