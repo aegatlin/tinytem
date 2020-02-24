@@ -6,3 +6,7 @@ type Todo {
 type Query {
   allTodos: [Todo!]!
 }
+
+type User {
+  authId: ID!
+}

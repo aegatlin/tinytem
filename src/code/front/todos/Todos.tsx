@@ -1,8 +1,8 @@
 import { style } from 'typestyle'
-import { useAuth0 } from '../auth0'
+import { useAuth0 } from '../Layout/auth0'
 import { AddTodoFormUI } from './AddTodoForm'
 import { useTodos } from './useTodos'
-import { useToken } from '../TokenProvider'
+import { useToken } from '../Layout/TokenProvider'
 
 const todosClass = style({
   display: 'flex',
