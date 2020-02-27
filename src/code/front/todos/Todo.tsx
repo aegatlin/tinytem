@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { style } from 'typestyle'
-import { CTodo } from '../../CTodo'
+import { CTodo } from '../../types'
 
 const todoClass = (completed: boolean): string =>
   style({

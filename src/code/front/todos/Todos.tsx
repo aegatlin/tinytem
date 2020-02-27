@@ -1,8 +1,8 @@
 import { style } from 'typestyle'
-import { useAuth0 } from '../Layout/auth0'
-import { AddTodoFormUI } from './AddTodoForm'
-import { useTodos } from './useTodos'
-import { useToken } from '../Layout/TokenProvider'
+import { CreateTodoForm } from './CreateTodoForm'
+import { useUser } from '../Layout/UserProvider'
+import { useMutation, gql } from '@apollo/client'
+import { CTodo } from '../../types'
 
 const todosClass = style({
   display: 'flex',
@@ -11,41 +11,46 @@ const todosClass = style({
   padding: '50px'
 })
 
-const TodoList = () => {
-  const {
-    todos,
-    todoMaker,
-    addTodo,
-    isLoadingAllTodos,
-    isCreatingTodo
-  } = useTodos()
+const createTodoQ = gql`
+  mutation CreateTodo($title: String!, $userId: ID!) {
+    createTodo(
+      data: { title: $title, completed: false, user: { connect: $userId } }
+    ) {
+      _id
+      title
+      completed
+    }
+  }
+`
+
+const Todo2 = ({ todo }: { todo: CTodo }) => {
+  return <div>{todo.title}</div>
+}
+
+export const Todos = () => {
+  const { user } = useUser()
+  const [createTodo, { data }] = useMutation(createTodoQ)
+
+  console.log('data ', data)
+  console.log(user)
+
+  const todos = user.todos.data
+  console.log('todos', todos)
+  const isCreatingTodo = false
 
   const todosWithCompleted = (b: boolean): JSX.Element[] =>
-    todos.filter(todo => todo.completed === b).map(todoMaker)
+    todos
+      .filter(todo => todo.completed === b)
+      .map(todo => <Todo2 key={todo._id} todo={todo} />)
 
   return (
     <div className={todosClass}>
       <h2>My Todos</h2>
-      <AddTodoFormUI addTodo={addTodo} isCreatingTodo={isCreatingTodo} />
+      <CreateTodoForm createTodo={createTodo} isCreatingTodo={isCreatingTodo} />
       <h3>Todo list</h3>
-      {isLoadingAllTodos && <div>Loading Todos...</div>}
       {todosWithCompleted(false)}
       <h3>Completed todos</h3>
-      {isLoadingAllTodos && <div>Loading Todos...</div>}
       {todosWithCompleted(true)}
     </div>
   )
-}
-
-export const Todos = (): JSX.Element => {
-  const { isAuthenticated, loading } = useAuth0()
-  const { token } = useToken()
-
-  const isReady = isAuthenticated && !loading
-  if (!isReady) return <div>Please log in to see your todos</div>
-
-  const isReadyWithToken = isReady && !!token
-  if (!isReadyWithToken) return <div>Login in successful. Loading...</div>
-
-  return <TodoList />
 }

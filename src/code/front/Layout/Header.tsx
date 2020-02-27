@@ -1,5 +1,5 @@
 import { style } from 'typestyle'
-import { useAuth0 } from './auth0'
+import { useAuth0 } from './Auth0Provider'
 
 const headerClass = style({
   padding: '0 50px',
@@ -29,11 +29,15 @@ const UserProfile = (): JSX.Element => {
 
 export const Header = (): JSX.Element => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0()
+  const doLogin = () => {
+    loginWithRedirect()
+  }
+  const doLogout = () => logout()
 
   const button = isAuthenticated ? (
-    <button onClick={(): void => logout()}>Logout</button>
+    <button onClick={doLogout}>Logout</button>
   ) : (
-    <button onClick={(): void => loginWithRedirect()}>Login</button>
+    <button onClick={doLogin}>Login</button>
   )
 
   return (

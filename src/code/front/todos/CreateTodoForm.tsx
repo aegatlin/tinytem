@@ -1,11 +1,15 @@
 import { useRef } from 'react'
+import { useUser } from '../Layout/UserProvider'
 
-export const AddTodoFormUI = ({ addTodo, isCreatingTodo }): JSX.Element => {
+export const CreateTodoForm = ({ createTodo, isCreatingTodo }): JSX.Element => {
+  const { user } = useUser()
   const input = useRef(null)
 
   const onSubmit = (e): void => {
     e.preventDefault()
-    addTodo({ title: input.current.value, completed: false })
+    createTodo({
+      variables: { title: input.current.value, userId: user._id }
+    })
     input.current.value = ''
   }
 

@@ -1,9 +1,9 @@
-import { Header } from './Header'
-import { setupPage, normalize } from 'csstips'
+import { normalize, setupPage } from 'csstips'
 import { style } from 'typestyle'
-import { Auth0Provider } from './auth0'
+import { Auth0Provider } from './Auth0Provider'
 import { GraphQLProvider } from './GraphQLProvider'
-import { TokenProvider } from './TokenProvider'
+import { Header } from './Header'
+import { UserProvider, useUser } from './UserProvider'
 
 setupPage('#__next')
 normalize()
@@ -13,15 +13,43 @@ const mainClass = style({
   height: '100%'
 })
 
+const loadingClass = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100%'
+})
+
+const LayoutChildren = ({ children }) => {
+  const { loading, preloading } = useUser()
+
+  if (loading || preloading) {
+    return (
+      <>
+        <Header />
+        <main className={mainClass}>
+          <div className={loadingClass}>Loading...</div>
+        </main>
+      </>
+    )
+  }
+
+  return (
+    <>
+      <Header />
+      <main className={mainClass}>{children}</main>
+    </>
+  )
+}
+
 export const Layout = ({ children }): JSX.Element => {
   return (
     <Auth0Provider>
-      <TokenProvider>
-        <GraphQLProvider>
-          <Header />
-          <main className={mainClass}>{children}</main>
-        </GraphQLProvider>
-      </TokenProvider>
+      <GraphQLProvider>
+        <UserProvider>
+          <LayoutChildren>{children}</LayoutChildren>
+        </UserProvider>
+      </GraphQLProvider>
     </Auth0Provider>
   )
 }

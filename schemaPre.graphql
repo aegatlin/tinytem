@@ -1,12 +1,14 @@
 type Todo {
   title: String!
   completed: Boolean!
-}
-
-type Query {
-  allTodos: [Todo!]!
+  user: User!
 }
 
 type User {
-  authId: ID!
+  authId: String! @unique
+  todos: [Todo!]! @relation
+}
+
+type Query {
+  findUserByAuthId(authId: String!): User
 }
