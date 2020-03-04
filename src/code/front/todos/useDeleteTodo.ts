@@ -27,7 +27,7 @@ interface IDeleteTodoVars {
 
 export const useDeleteTodo = (todo: CTodo) => {
   const { user } = useUser()
-  const [deleteTodoMutationFunction, { data: deleteTodoData }] = useMutation<
+  const [deleteTodoMutationFunction, { loading, error }] = useMutation<
     IDeleteTodo,
     IDeleteTodoVars
   >(DELETE_TODO, {
@@ -47,9 +47,11 @@ export const useDeleteTodo = (todo: CTodo) => {
     }
   })
 
+  if (error) console.error(error)
+
   const deleteTodo = () => {
     deleteTodoMutationFunction({ variables: { id: todo._id } })
   }
 
-  return { deleteTodo }
+  return { deleteTodo, isDeleting: loading }
 }

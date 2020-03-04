@@ -22,10 +22,12 @@ interface IUpdateTodoVars {
 }
 
 export const useUpdateTodo = (todo: CTodo) => {
-  const [updateTodoMutationFunction] = useMutation<
+  const [updateTodoMutationFunction, { error, loading }] = useMutation<
     IUpdateTodo,
     IUpdateTodoVars
   >(UPDATE_TODO)
+
+  if (error) console.error(error)
 
   const toggleCompleted = () => {
     updateTodoMutationFunction({
@@ -33,5 +35,5 @@ export const useUpdateTodo = (todo: CTodo) => {
     })
   }
 
-  return { toggleCompleted }
+  return { toggleCompleted, isUpdating: loading }
 }

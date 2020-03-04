@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useCreateTodo } from './useCreateTodo'
 
 export const CreateTodoForm = (): JSX.Element => {
-  const { createTodo } = useCreateTodo()
+  const { createTodo, isCreating } = useCreateTodo()
   const input = useRef(null)
 
   const onSubmit = (e): void => {
@@ -18,6 +18,7 @@ export const CreateTodoForm = (): JSX.Element => {
         <input type="text" name="add-todo" ref={input} />
         <button type="submit">Submit</button>
       </form>
+      {isCreating && <div>Creating new todo...</div>}
     </>
   )
 }

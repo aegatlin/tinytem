@@ -30,7 +30,7 @@ interface ICreateTodoVars {
 
 export const useCreateTodo = () => {
   const { user } = useUser()
-  const [createTodoMutationFunction, { data: createTodoData }] = useMutation<
+  const [createTodoMutationFunction, { error, loading }] = useMutation<
     ICreateTodo,
     ICreateTodoVars
   >(CREATE_TODO, {
@@ -49,11 +49,13 @@ export const useCreateTodo = () => {
     }
   })
 
+  if (error) console.error(error)
+
   const createTodo = ({ title }) => {
     createTodoMutationFunction({
       variables: { title, userId: user._id }
     })
   }
 
-  return { createTodo }
+  return { createTodo, isCreating: loading }
 }
