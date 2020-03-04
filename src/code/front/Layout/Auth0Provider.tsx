@@ -32,7 +32,7 @@ export const Auth0Provider = ({ children }): JSX.Element => {
         domain: 'gatlin.auth0.com',
         client_id: 'fL4roRqgEk4LJYeQTPv0hAAT166bfqu0',
         audience: 'tinytem-api',
-        redirect_uri: 'http://localhost:3000'
+        redirect_uri: process.env.AUTH0_REDIRECT_URI
       })
 
       setAuth0Client(newAuth0Client)
