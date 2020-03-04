@@ -6,17 +6,14 @@ import {
   makeRemoteExecutableSchema
 } from 'apollo-server-micro'
 import fetch from 'isomorphic-unfetch'
-import { typeDefs } from '../../code/back/typeDefs'
 import { authenticate } from '../../code/back/authenticate'
+import { typeDefs } from '../../code/back/typeDefs'
 
 const URI = 'https://graphql.fauna.com/graphql'
 const KEY = 'fnADkrIdXRACE0yd_1P9EyXxzWIkPz2rrM90E6Pv'
 
 const httpLink = new HttpLink({ uri: URI, fetch: fetch })
-const link = setContext((request, previousContext) => {
-  console.log('IN setContext LINKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK')
-  console.log(request, previousContext)
-
+const link = setContext(() => {
   return {
     headers: {
       Authorization: `Bearer ${KEY}`

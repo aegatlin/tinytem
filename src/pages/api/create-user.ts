@@ -1,6 +1,6 @@
+import { GraphQLClient } from 'graphql-request'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { authenticate } from '../../code/back/authenticate'
-import { GraphQLClient } from 'graphql-request'
 
 const gqlClient = new GraphQLClient('https://graphql.fauna.com/graphql', {
   headers: {
