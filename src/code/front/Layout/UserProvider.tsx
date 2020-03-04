@@ -3,18 +3,11 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { CUser } from '../../types'
 import { useAuth0 } from './Auth0Provider'
 
-const findUserByAuthIdQuery = gql`
+const FIND_USER_BY_AUTH_ID = gql`
   query FindUserByAuthId($authId: String!) {
     findUserByAuthId(authId: $authId) {
       _id
       authId
-      todos {
-        data {
-          _id
-          title
-          completed
-        }
-      }
     }
   }
 `
@@ -39,7 +32,7 @@ export const UserProvider = ({ children }) => {
     const getUser = async () => {
       const send = async () => {
         const { data } = await client.query({
-          query: findUserByAuthIdQuery,
+          query: FIND_USER_BY_AUTH_ID,
           variables: { authId: auth0User.sub }
         })
 

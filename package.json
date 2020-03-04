@@ -26,6 +26,8 @@
   "dependencies": {
     "@apollo/client": "^3.0.0-beta.34",
     "@auth0/auth0-spa-js": "^1.6.4",
+    "apollo-link-context": "^1.0.19",
+    "apollo-link-http": "^1.5.16",
     "apollo-server-micro": "^2.10.1",
     "csstips": "^1.2.0",
     "graphql": "^14.6.0",

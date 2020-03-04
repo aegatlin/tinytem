@@ -14,7 +14,7 @@ export const GraphQLProvider = ({ children }) => {
   const client = new ApolloClient({
     link: new HttpLink({
       fetch: fetch,
-      uri: '/api/graphql',
+      uri: '/api/gql',
       headers: {
         Authorization: `Bearer ${token ?? ''}`
       }

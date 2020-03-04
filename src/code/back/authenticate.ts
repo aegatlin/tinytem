@@ -11,7 +11,6 @@ interface IPayload {
 export const authenticate = async (
   req: IncomingMessage | NextApiRequest
 ): Promise<[boolean, any]> => {
-  return [true, { }]
   try {
     const { headers } = req
     const token = headers.authorization.split(' ')[1]

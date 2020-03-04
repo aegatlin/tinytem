@@ -11,7 +11,6 @@ export const typeDefs = gql`
   directive @relation(name: String) on FIELD_DEFINITION
   directive @unique(index: String) on FIELD_DEFINITION
   scalar Date
-
   scalar Long
 
   type Mutation {

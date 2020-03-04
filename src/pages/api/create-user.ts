@@ -1,6 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { authenticate } from '../../code/back/authenticate'
-import { gqlClient } from '../../code/back/resolvers'
+import { GraphQLClient } from 'graphql-request'
+
+const gqlClient = new GraphQLClient('https://graphql.fauna.com/graphql', {
+  headers: {
+    Authorization: 'Bearer fnADkrIdXRACE0yd_1P9EyXxzWIkPz2rrM90E6Pv'
+  }
+})
 
 const createUserMutation = `
   mutation CreateUser($authId: String!) {
@@ -25,8 +31,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.statusCode = 200
     res.end()
-  } catch {
+  } catch (e) {
     console.error('Trying to create a user that already exists!')
+    console.error(e)
     res.statusCode = 500
     res.end()
   }
