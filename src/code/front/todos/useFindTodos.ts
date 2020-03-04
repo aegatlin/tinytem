@@ -17,7 +17,7 @@ export const FIND_TODOS_BY_USER_ID = gql`
   }
 `
 
-export interface IFindTodosQuery {
+export interface IFindTodos {
   findUserByID: {
     todos: {
       data: CTodo[]
@@ -31,7 +31,7 @@ export interface IFindTodosVars {
 
 export const useFindTodos = (): { todos: CTodo[]; loadingTodos: boolean } => {
   const { user } = useUser()
-  const { data, error, loading } = useQuery<IFindTodosQuery, IFindTodosVars>(
+  const { data, error, loading } = useQuery<IFindTodos, IFindTodosVars>(
     FIND_TODOS_BY_USER_ID,
     {
       variables: { id: user._id }
