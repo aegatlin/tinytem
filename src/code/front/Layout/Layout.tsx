@@ -24,11 +24,13 @@ const LayoutChildren = ({ children }) => {
   const { loading, preloading } = useUser()
 
   if (loading || preloading) {
+    const text = preloading ? 'Please log in to see your todos' : 'Loading...'
+
     return (
       <>
         <Header />
         <main className={mainClass}>
-          <div className={loadingClass}>Loading...</div>
+          <div className={loadingClass}>{text}</div>
         </main>
       </>
     )

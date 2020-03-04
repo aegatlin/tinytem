@@ -20,6 +20,7 @@ interface IUser {
 
 const UserContext = createContext(null)
 export const useUser: () => IUser = () => useContext(UserContext)
+
 export const UserProvider = ({ children }) => {
   const client = useApolloClient()
   const { token: auth0Token, user: auth0User, isAuthenticated } = useAuth0()
