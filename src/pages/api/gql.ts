@@ -12,6 +12,8 @@ import { typeDefs } from '../../code/back/typeDefs'
 const URI = 'https://graphql.fauna.com/graphql'
 const KEY = 'fnADkrIdXRACE0yd_1P9EyXxzWIkPz2rrM90E6Pv'
 
+console.log(process.env.howdy)
+
 const httpLink = new HttpLink({ uri: URI, fetch: fetch })
 const link = setContext(() => {
   return {
