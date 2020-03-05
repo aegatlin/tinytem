@@ -1,5 +1,5 @@
 {
   "env": {
-    "HOWDY": "@howdy"
+    "FAUNADB_KEY": "@faunadb_key"
   }
 }
