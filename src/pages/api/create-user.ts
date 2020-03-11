@@ -4,7 +4,7 @@ import { authenticate } from '../../code/back/authenticate'
 
 const gqlClient = new GraphQLClient('https://graphql.fauna.com/graphql', {
   headers: {
-    Authorization: 'Bearer fnADkrIdXRACE0yd_1P9EyXxzWIkPz2rrM90E6Pv'
+    Authorization: `Bearer ${process.env.FAUNADB_KEY}`
   }
 })
 

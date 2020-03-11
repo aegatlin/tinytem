@@ -1,42 +1,56 @@
-import { setContext } from 'apollo-link-context'
 import { HttpLink } from 'apollo-link-http'
 import {
   ApolloServer,
-  makeExecutableSchema,
+  introspectSchema,
   makeRemoteExecutableSchema
 } from 'apollo-server-micro'
+import { GraphQLSchema } from 'graphql'
 import fetch from 'isomorphic-unfetch'
 import { authenticate } from '../../code/back/authenticate'
-import { typeDefs } from '../../code/back/typeDefs'
 
-const URI = 'https://graphql.fauna.com/graphql'
-const KEY = process.env.FAUNADB_KEY
+let schema: GraphQLSchema, server: ApolloServer
 
-const httpLink = new HttpLink({ uri: URI, fetch: fetch })
-const link = setContext(() => {
-  return {
-    headers: {
-      Authorization: `Bearer ${KEY}`
-    }
-  }
-}).concat(httpLink)
-
-const eschema = makeExecutableSchema({ typeDefs: typeDefs })
-const reschema = makeRemoteExecutableSchema({ schema: eschema, link })
-
-const server = new ApolloServer({
-  schema: reschema,
-  context: async ({ req, res }) => {
-    const [isAuthenticated, user] = await authenticate(req)
-
-    if (!isAuthenticated) {
-      res.statusCode = 401
-      res.end()
-    }
-
-    return { user }
+const link = new HttpLink({
+  uri: 'https://graphql.fauna.com/graphql',
+  fetch,
+  headers: {
+    Authorization: `Bearer ${process.env.FAUNADB_KEY}`
   }
 })
 
+const getSchema = async (): Promise<GraphQLSchema> => {
+  if (schema) return schema
+
+  schema = makeRemoteExecutableSchema({
+    schema: await introspectSchema(link),
+    link
+  })
+
+  return schema
+}
+
+const getServer = (schema: GraphQLSchema): ApolloServer => {
+  if (server) return server
+
+  server = new ApolloServer({
+    schema,
+    context: async ({ req, res }) => {
+      const [isAuthenticated, user] = await authenticate(req)
+
+      if (!isAuthenticated) {
+        res.statusCode = 401
+        res.end()
+      }
+
+      return { user }
+    }
+  })
+
+  return server
+}
+
 export const config = { api: { bodyParser: false } }
-export default server.createHandler({ path: '/api/gql' })
+export default async (req, res) => {
+  const server = getServer(await getSchema())
+  await server.createHandler({ path: '/api/gql' })(req, res)
+}
