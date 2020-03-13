@@ -1,4 +1,5 @@
 import { IncomingMessage } from 'http'
+import fetch from 'isomorphic-unfetch'
 import { JWK, JWT } from 'jose'
 import { NextApiRequest } from 'next'
 

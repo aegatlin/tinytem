@@ -4,6 +4,7 @@ import {
   introspectSchema,
   makeRemoteExecutableSchema
 } from 'apollo-server-micro'
+import fetch from 'isomorphic-unfetch'
 import { authenticate } from './authenticate'
 
 const link = new HttpLink({
