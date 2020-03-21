@@ -1,7 +1,7 @@
 name: e2e
 on: [push]
 jobs:
-  cypress-run:
+  cypress:
     runs-on: ubuntu-16.04
     steps:
       - name: Checkout
@@ -19,3 +19,17 @@ jobs:
         uses: cypress-io/github-action@v1
         with:
           working-directory: e2e
+  smoke-prod:
+    runs-on: ubuntu-16.04
+    needs: cypress
+    env:
+      CYPRESS_BASE_URL: https://tinytem.now.sh
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Install root dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Smoke test production
+        uses: cypress-io/github-action@v1
