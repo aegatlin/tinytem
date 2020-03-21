@@ -11,7 +11,7 @@ jobs:
 
       - name: Start server in the background
         run: |
-          npm build
+          npm run build
           npm start &
 
       - name: Cypress run
