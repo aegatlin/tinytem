@@ -2,6 +2,6 @@ name: Smoke Prod
 on: deployment
 jobs:
   smoke:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     steps:
       - run: echo hello world
