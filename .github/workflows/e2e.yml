@@ -1,4 +1,3 @@
-name: End-to-end tests
 on: [push]
 jobs:
   cypress-run:
@@ -11,8 +10,9 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: Start server in the background
-        run: npm build
-        run: npm start &
+        run: |
+          npm build
+          npm start &
 
       - name: Cypress run
         uses: cypress-io/github-action@v1
