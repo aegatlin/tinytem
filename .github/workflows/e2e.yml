@@ -33,3 +33,5 @@ jobs:
 
       - name: Smoke test production
         uses: cypress-io/github-action@v1
+        with:
+          working-directory: e2e
