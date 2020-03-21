@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
+    "build": "next build",
+    "start": "next start",
     "format": "npx prettier --write \"src/**/**.{ts,tsx,js}\"",
     "lint": "eslint \"src/**\""
   },
