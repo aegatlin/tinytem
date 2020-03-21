@@ -1,0 +1,7 @@
+name: Smoke Prod
+on: deployment
+jobs:
+  smoke:
+    runs-on: ubuntu
+    steps:
+      - run: echo hello world
