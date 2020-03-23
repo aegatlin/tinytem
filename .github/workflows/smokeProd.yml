@@ -1,5 +1,6 @@
 name: Smoke Prod
 on: deployment
+runs-on: ubuntu-latest
 jobs:
   smokeProd:
     steps:
