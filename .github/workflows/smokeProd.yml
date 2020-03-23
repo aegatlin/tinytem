@@ -1,8 +1,8 @@
 name: Smoke Prod
 on: deployment
-runs-on: ubuntu-latest
 jobs:
   smokeProd:
+    runs-on: ubuntu-latest
     steps:
       - name: Hey World
         run: echo hey world
