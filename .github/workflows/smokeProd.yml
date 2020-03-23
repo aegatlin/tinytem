@@ -1,0 +1,7 @@
+name: Smoke Prod
+on: deployment
+jobs:
+  smokeProd:
+    steps:
+      - name: Hey World
+        run: echo hey world
